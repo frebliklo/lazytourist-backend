@@ -13,13 +13,20 @@ const app = express()
 
 app.use(bodyParser.json())
 
-// Fetch documents on start
-currencyLayerCron()
-fixerIoCron()
-
-cron.schedule('* */4 * * *', () => {
+cron.schedule('* * */4 * * *', () => {
   currencyLayerCron()
   fixerIoCron()
+})
+
+app.post('/currencies', (req, res) => {
+  const currency = new Currency(req.body.currency)
+  console.log(req.body.currency)
+
+  currency.save().then(doc => {
+    res.send(doc)
+  }, e => {
+    res.status(400).send(e)
+  })
 })
 
 app.get('/currencies', (req, res) => {
