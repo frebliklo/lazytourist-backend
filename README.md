@@ -42,19 +42,16 @@ To make sure that everything went ok run the following to retrieve and review th
 
 `> db.Tourist.find()`
 
+When developing you need to enable authentication and store the credentials along with the other API keys needed (see below in 2.1).
+
 When working with the db locally I use Robo 3T to have a graphical UI. If you want ot do the same then you can find the application at their website [https://robomongo.org/](https://robomongo.org/)
-
-### 1.3 Mongoose
-
 
 ## 2.0 Development
 
 ### 2.1 API keys
 
-To run the application locally you need API keys for the different APIs used and store them in a keys files in the root of the project
+To run the application locally you need API keys for the different APIs used and store them in `keys/dev.js`
 
-### 2.1 Data models
-
-The heart of the application is to provide users with a calculation of the gratuity they are expected to pay and the sales tax for the state their currently in. To give a better reference to amounts users can also get the amount in a secondary currency that they can easily relate to.
-
-A visual of the data models can be seen in [this diagram](https://www.draw.io/#G1LuDo5H43fNUUXEknjNchO5n9UorQ9Xpe).
+The needed API keys are:
+- [CurrencyLayer](https://currencylayer.com/)
+- [Fixer.io](https://fixer.io/)

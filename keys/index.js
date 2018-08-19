@@ -1,8 +1,5 @@
-const { MONGO_USER, MONGO_PWD, CURRENCY_LAYER_API_KEY, FIXER_API_KEY } = require('./local-keys')
-
-module.exports = {
-  MONGO_USER: process.env.MONGO_USER || MONGO_USER,
-  MONGO_PWD: process.env.MONGO_PWD || MONGO_PWD,
-  CURRENCY_LAYER_API_KEY: process.end.CURRENCY_LAYER_API_KEY || CURRENCY_LAYER_API_KEY,
-  FIXER_API_KEY: process.env.FIXER_API_KEY || FIXER_API_KEY
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./prod')
+} else {
+  module.exports = require('./dev')
 }
