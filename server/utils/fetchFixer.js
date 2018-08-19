@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const { FIXER_API_KEY } = require('../../keys/local-keys')
+const { FIXER_API_KEY } = require('../../keys')
 
 const currencies = 'GBP,USD,DKK'
 const url = `http://data.fixer.io/api/latest?access_key=${FIXER_API_KEY}&symbols=${currencies}`

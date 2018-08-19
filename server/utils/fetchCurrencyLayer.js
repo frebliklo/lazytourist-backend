@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const { CURRENCY_LAYER_API_KEY } = require('../../keys/local-keys')
+const { CURRENCY_LAYER_API_KEY } = require('../../keys')
 
 const currencies = 'DKK,EUR,GBP'
 const url = `http://www.apilayer.net/api/live?access_key=${CURRENCY_LAYER_API_KEY}&currencies=${currencies}`
