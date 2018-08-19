@@ -13,6 +13,10 @@ const app = express()
 
 app.use(bodyParser.json())
 
+// Fetch documents on start
+currencyLayerCron()
+fixerIoCron()
+
 cron.schedule('* */4 * * *', () => {
   currencyLayerCron()
   fixerIoCron()
