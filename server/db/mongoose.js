@@ -9,7 +9,7 @@ const options = {
   useNewUrlParser: true
 }
 
-const database = process.env.MONGODB_URI || 'mongodb://localhost:27017/TouristApi'
+const database = process.env.MONGODB_URI
 
 mongoose.connect(database, options, (err, client) => {
   if(err) {

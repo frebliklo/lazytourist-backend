@@ -1,3 +1,5 @@
+require('./config')
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cron = require('node-cron')
@@ -18,6 +20,7 @@ cron.schedule('* * */12 * * *', () => {
   fixerIoCron()
 })
 
+// Consider removing this at some point soon... Should only be for initializing the db (which have already been done)
 app.post('/currencies', (req, res) => {
   const currency = new Currency(req.body.currency)
 
@@ -50,7 +53,7 @@ app.get('/currencies/:source', (req, res) => {
   })
 })
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
 app.listen(port, () => {
   console.log(`App running on port: ${port}`)
