@@ -20,7 +20,6 @@ cron.schedule('* * */4 * * *', () => {
 
 app.post('/currencies', (req, res) => {
   const currency = new Currency(req.body.currency)
-  console.log(req.body.currency)
 
   currency.save().then(doc => {
     res.send(doc)
