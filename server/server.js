@@ -13,7 +13,7 @@ const app = express()
 
 app.use(bodyParser.json())
 
-cron.schedule('* * */4 * * *', () => {
+cron.schedule('* * */12 * * *', () => {
   currencyLayerCron()
   fixerIoCron()
 })

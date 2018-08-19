@@ -44,7 +44,6 @@ const fetchFixer = callback => {
       const data = {
         source: base,
         rates: newRates,
-        updatedAt: new Date()
       }
 
       callback(undefined, data)

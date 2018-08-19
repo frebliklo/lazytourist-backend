@@ -44,7 +44,6 @@ const fetchCurrencyLayer = callback => {
       const data = {
         source,
         rates: newRates,
-        updatedAt: new Date()
       }
       
       callback(undefined, data)
