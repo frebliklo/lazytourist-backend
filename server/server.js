@@ -32,7 +32,7 @@ app.get('/currencies/:source', (req, res) => {
   if(source !== 'USD' && source !== 'EUR') {
     return res.status(404).send('Unknown currency. Only USD or EUR are supported.')
   }
-  
+
   Currency.findOne({ source }).then(currency => {
     res.send({ currency })
   }).catch(e => {
@@ -40,8 +40,10 @@ app.get('/currencies/:source', (req, res) => {
   })
 })
 
-app.listen(3000, () => {
-  console.log('App is running in port 3000')
+const port = process.env.PORT || 3000
+
+app.listen(port, () => {
+  console.log(`App running on port: ${port}`)
 })
 
 module.exports = { app }
