@@ -2,23 +2,13 @@ require('./config')
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const cron = require('node-cron')
 
 const { mongoose } = require('./db/mongoose')
 const { Currency } = require('./models/currency')
-const { User } = require('./models/user')
-
-const { currencyLayerCron } = require('./cron/currencylayer-cron')
-const { fixerIoCron } = require('./cron/fixerio-cron')
 
 const app = express()
 
 app.use(bodyParser.json())
-
-cron.schedule('* * */12 * * *', () => {
-  currencyLayerCron()
-  fixerIoCron()
-})
 
 // Consider removing this at some point soon... Should only be for initializing the db (which have already been done)
 app.post('/currencies', (req, res) => {
