@@ -66,13 +66,13 @@ describe('GET /users/me', () => {
   })
 })
 
-describe('POST /create-user', () => {
+describe('POST /users/signup', () => {
   it('should create a user', done => {
     const email = 'example@example.com'
     const password = 'Abc12345'
 
     request(app)
-      .post('/create-user')
+      .post('/users/signup')
       .send({ email, password })
       .expect(200)
       .expect(res => {
@@ -88,7 +88,7 @@ describe('POST /create-user', () => {
           expect(user).toBeTruthy()
           expect(user.password).not.toBe(password)
           done()
-        })
+        }).catch(e => done(e))
       })
   })
 
@@ -97,7 +97,7 @@ describe('POST /create-user', () => {
     const password = 'ab'
 
     request(app)
-      .post('/create-user')
+      .post('/users/signup')
       .send({ email, password })
       .expect(400)
       .end(done)
@@ -108,9 +108,59 @@ describe('POST /create-user', () => {
     const password = 'Abc12345'
 
     request(app)
-      .post('/create-user')
+      .post('/users/signup')
       .send({ email, password })
       .expect(400)
       .end(done)
   })
+})
+
+describe('POST /users/login', () => {
+  it('should log in user and return token', done => {
+    const { email, password } = users[1]
+
+    request(app)
+      .post('/users/login')
+      .send({ email, password })
+      .expect(200)
+      .expect(res => {
+        expect(res.headers['x-auth']).toBeTruthy()
+      })
+      .end((err, res) => {
+        if(err) {
+          return done(err)
+        }
+        
+        User.findById(users[1]._id).then(user => {
+          expect(user.toObject().tokens[0]).toMatchObject({
+            access : 'auth',
+            token : res.headers['x-auth']
+          })
+          done()
+        }).catch(e => done(e))
+      })
+  })
+
+  it('should reject invalid login', done => {
+    const email = users[0].email
+    const password = 'bababab'
+
+    request(app)
+      .post('/users/login')
+      .send({ email, password })
+      .expect(400)
+      .expect(res => {
+        expect(res.headers['x-auth']).toBeFalsy()
+      })
+      .end((err, res) => {
+        if(err) {
+          return done(err)
+        }
+        
+        User.findById(users[1]._id).then(user => {
+          expect(user.tokens.length).toBe(0)
+          done()
+        }).catch(e => done(e))
+      })
+    })
 })
