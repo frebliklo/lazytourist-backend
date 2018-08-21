@@ -1,6 +1,6 @@
 const expect = require('expect')
 
-const { fetchCurrencyLayer } = require('../utils/fetchCurrencyLayer')
+const { fetchCurrencyLayer } = require('../../utils/fetchCurrencyLayer')
 
 describe('Fetch exchange rates for USD from CurrencyLayer', () => {
   it('should return expected data', done => {

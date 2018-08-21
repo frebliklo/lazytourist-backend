@@ -1,6 +1,6 @@
 const expect = require('expect')
 
-const { fetchFixer } = require('../utils/fetchFixer')
+const { fetchFixer } = require('../../utils/fetchFixer')
 
 describe('Fetch exchange rates for Euro from Fixer.io', () => {
   it('should return expected data', done => {

@@ -44,7 +44,8 @@ First create a user
     user: '$YOUR_USERNAME',
     pwd: '$YOUR_PASSWORD',
     roles: [
-      { role: 'readWrite', db: 'Tourist' }
+      { role: 'readWrite', db: 'TouristApi' },
+      { role: 'readWrite', db: 'TouristApiTest' }
     ]
   }
 )
@@ -55,13 +56,13 @@ Next up you need to add the credentials in your local `dev.js` file (see below i
 #### Test connection
 Now you're ready to run commands. Test your connection by inserting some arbitrary document
 
-`> db.Tourist.insert({name: 'John D Rockefeller'})`
+`> db.TouristApi.insert({name: 'John D Rockefeller'})`
 
 You should get a message saying `WriteResult({ "nInserted": 1 })`. This means that you have succesfully inserted a document in the database. Yay!
 
 To make sure that everything went ok run the following to retrieve and review the document
 
-`> db.Tourist.find()`
+`> db.TouristApi.find()`
 
 When developing you need to enable authentication and store the credentials along with the other API keys needed ([see below section below](https://github.com/frebliklo/lazytourist-backend#13-api-keys)).
 
