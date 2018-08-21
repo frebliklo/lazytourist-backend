@@ -20,6 +20,10 @@
     "currency"
   ],
   "author": "Frederik B Klovborg",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/frebliklo/lazytourist-backend.git"
+  },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
