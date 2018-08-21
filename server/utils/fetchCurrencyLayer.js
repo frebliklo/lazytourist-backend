@@ -43,6 +43,7 @@ const fetchCurrencyLayer = callback => {
 
       const data = {
         source,
+        name: 'United States Dollar',
         rates: newRates,
       }
       

@@ -14,7 +14,6 @@ const app = express()
 
 app.use(bodyParser.json())
 
-
 nodeCron.schedule('0 */12 * * *', () => {
   // Log to monitor job
   console.log('Job running every minute 0 of 12th hour', new Date())

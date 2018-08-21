@@ -9,6 +9,7 @@ const exchangeSchema = new Schema({
 
 const currencySchema = new Schema({
   source: { type: String, required: true },
+  name: { type: String, required: true },
   rates: [exchangeSchema],
   updatedAt: { type: Date, default: Date.now }
 })

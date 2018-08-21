@@ -43,7 +43,8 @@ const fetchFixer = callback => {
 
       const data = {
         source: base,
-        rates: newRates,
+        name: 'Euro',
+        rates: newRates
       }
 
       callback(undefined, data)
