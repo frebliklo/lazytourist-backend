@@ -72,7 +72,7 @@ app.get('/currencies/:source', (req, res) => {
   })
 })
 
-app.post('/create-user', (req, res) => {
+app.post('/users/signup', (req, res) => {
   const body = _.pick(req.body, ['firstName', 'email', 'password'])
   
   const user = new User(body)
@@ -88,6 +88,19 @@ app.post('/create-user', (req, res) => {
 
 app.get('/users/me', authenticate, (req, res) => {
   res.send(req.user)
+})
+
+app.post('/users/login', (req, res) => {
+  const body = _.pick(req.body, ['email', 'password'])
+  const { email, password } = body
+
+  User.findByCredentials(email,password).then(user => {
+    return user.generateAuthToken().then(token => {
+      res.header('x-auth', token).send(user)
+    })
+  }).catch(e => {
+    res.status(400).send()
+  })
 })
 
 const port = process.env.PORT
