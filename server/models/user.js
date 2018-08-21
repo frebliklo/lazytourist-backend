@@ -2,6 +2,7 @@ const _ = require('lodash')
 const mongoose = require('mongoose')
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 const { JWT_SALT } = require('../../keys')
 
@@ -60,6 +61,19 @@ UserSchema.statics.findByToken = function(token) {
     'tokens.access': 'auth'
   })
 }
+
+UserSchema.pre('save', function(next) {
+  if(this.isModified('password')) {
+    bcrypt.genSalt(15, (err,salt) => {
+      bcrypt.hash(this.password, salt, (err, hash) => {
+        this.password = hash
+        next()
+      })
+    })
+  } else {
+    next()
+  }
+})
 
 const User = mongoose.model('User', UserSchema)
 
