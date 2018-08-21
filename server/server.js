@@ -8,6 +8,7 @@ const nodeCron = require('node-cron')
 const { mongoose } = require('./db/mongoose')
 const { Currency } = require('./models/currency')
 const { User } = require('./models/user')
+const { authenticate } = require('./middleware/authenticate')
 
 const { fetchCurrencyLayer } = require('./utils/fetchCurrencyLayer')
 const { fetchFixer } = require('./utils/fetchFixer') 
@@ -83,6 +84,10 @@ app.post('/create-user', (req, res) => {
   }).catch(e => {
     res.status(400).send(e)
   })
+})
+
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user)
 })
 
 const port = process.env.PORT
