@@ -8,12 +8,12 @@ You can find the native version on [Google Play](https://play.google.com/store/a
 
 ## 1.0 Installation and setup
 
-### 1.1 Setup
+### 1.1 Dependencies
 To get going with the project locally then clone the repo and install all dependencies
 
 `npm install`
 
-### 1.2 MongoDB
+### 1.2 Local Database
 The project uses mongodb. To get up and running do the following:
 
 Install MongoDB Community server. The latest version can be found [here](https://www.mongodb.com/download-center?jmp=nav#community)
@@ -63,13 +63,11 @@ To make sure that everything went ok run the following to retrieve and review th
 
 `> db.Tourist.find()`
 
-When developing you need to enable authentication and store the credentials along with the other API keys needed (see below in 2.1).
+When developing you need to enable authentication and store the credentials along with the other API keys needed ([see below section below](https://github.com/frebliklo/lazytourist-backend#13-api-keys)).
 
 When working with the db locally I use Robo 3T to have a graphical UI. If you want ot do the same then you can find the application at their website [https://robomongo.org/](https://robomongo.org/)
 
-## 2.0 Development
-
-### 2.1 API keys
+### 1.3 API keys
 
 To run the application locally you need API keys for the different APIs used and store them in `keys/dev.js`
 

@@ -1,19 +1,19 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
-const exchangeSchema = new Schema({
+const ExchangeSchema = new Schema({
   currency: { type: String, required: true },
   name: { type: String },
   rate: { type: Number, requires: true }
 })
 
-const currencySchema = new Schema({
+const CurrencySchema = new Schema({
   source: { type: String, required: true },
   name: { type: String, required: true },
-  rates: [exchangeSchema],
+  rates: [ExchangeSchema],
   updatedAt: { type: Date, default: Date.now }
 })
 
-const Currency = mongoose.model('Currency', currencySchema)
+const Currency = mongoose.model('Currency', CurrencySchema)
 
 module.exports = { Currency }

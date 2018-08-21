@@ -1,11 +1,13 @@
 require('./config')
 
+const _ = require('lodash')
 const express = require('express')
 const bodyParser = require('body-parser')
 const nodeCron = require('node-cron')
 
 const { mongoose } = require('./db/mongoose')
 const { Currency } = require('./models/currency')
+const { User } = require('./models/user')
 
 const { fetchCurrencyLayer } = require('./utils/fetchCurrencyLayer')
 const { fetchFixer } = require('./utils/fetchFixer') 
@@ -66,6 +68,20 @@ app.get('/currencies/:source', (req, res) => {
     res.send({ currency })
   }).catch(e => {
     res.status(400).send('Unable to get currency')
+  })
+})
+
+app.post('/create-user', (req, res) => {
+  const body = _.pick(req.body, ['firstName', 'email', 'password'])
+  
+  const user = new User(body)
+
+  user.save().then(() => {
+    return user.generateAuthToken()
+  }).then(token => {
+    res.header('x-auth', token).send(user)
+  }).catch(e => {
+    res.status(400).send(e)
   })
 })
 
