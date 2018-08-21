@@ -103,6 +103,15 @@ app.post('/users/login', (req, res) => {
   })
 })
 
+app.delete('/users/logout', authenticate, (req, res) => {
+  console.log(req)
+  req.user.removeToken(req.token).then(() => {
+    res.status(200).send()
+  }).catch(e => {
+    res.status(400).send()
+  })
+})
+
 const port = process.env.PORT
 
 app.listen(port, () => {

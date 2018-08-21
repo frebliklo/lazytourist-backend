@@ -35,7 +35,7 @@ UserSchema.methods.toJSON = function() {
   return _.pick(userObject, ['_id', 'email'])
 }
 
-UserSchema.methods.generateAuthToken = function() { // Use standard function to have access to this
+UserSchema.methods.generateAuthToken = function() {
   const access = 'auth'
   const token = jwt.sign({ _id: this._id.toHexString(), access }, JWT_SALT).toString()
 
@@ -46,19 +46,9 @@ UserSchema.methods.generateAuthToken = function() { // Use standard function to 
   })
 }
 
-UserSchema.statics.findByToken = function(token) {
-  let decoded
-
-  try {
-    decoded = jwt.verify(token, JWT_SALT)
-  } catch(e) {
-    return Promise.reject()
-  }
-
-  return this.findOne({
-    '_id': decoded._id,
-    'tokens.token': token,
-    'tokens.access': 'auth'
+UserSchema.methods.removeToken = function(token) {
+  return this.update({
+    $pull: { tokens: { token } }
   })
 }
 
@@ -77,6 +67,22 @@ UserSchema.statics.findByCredentials = function(email, password) {
         }
       })
     })
+  })
+}
+
+UserSchema.statics.findByToken = function(token) {
+  let decoded
+
+  try {
+    decoded = jwt.verify(token, JWT_SALT)
+  } catch(e) {
+    return Promise.reject()
+  }
+
+  return this.findOne({
+    '_id': decoded._id,
+    'tokens.token': token,
+    'tokens.access': 'auth'
   })
 }
 
