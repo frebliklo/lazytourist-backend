@@ -21,14 +21,15 @@
   ],
   "author": "Frederik B Klovborg",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/frebliklo/lazytourist-backend.git"
+    "type": "git",
+    "url": "https://github.com/frebliklo/lazytourist-backend.git"
   },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",

@@ -2,7 +2,9 @@ require('./config')
 
 const _ = require('lodash')
 const express = require('express')
+const path = require('path')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const nodeCron = require('node-cron')
 
 const { mongoose } = require('./db/mongoose')
@@ -15,7 +17,10 @@ const { fetchFixer } = require('./utils/fetchFixer')
 
 const app = express()
 
+app.use(cors())
 app.use(bodyParser.json())
+
+app.use('/login', express.static(path.join(__dirname, '..', 'login')))
 
 nodeCron.schedule('0 */12 * * *', () => {
   // Log to monitor job
@@ -96,10 +101,10 @@ app.post('/users/login', (req, res) => {
 
   User.findByCredentials(email,password).then(user => {
     return user.generateAuthToken().then(token => {
-      res.header('x-auth', token).send(user)
+      return res.header('x-auth', token).send({ message: 'You are now logged in!', token })
     })
   }).catch(e => {
-    res.status(400).send()
+    res.status(401).send('Invalid password or username')
   })
 })
 
