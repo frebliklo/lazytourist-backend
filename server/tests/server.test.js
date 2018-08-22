@@ -148,7 +148,7 @@ describe('POST /users/login', () => {
     request(app)
       .post('/users/login')
       .send({ email, password })
-      .expect(400)
+      .expect(401)
       .expect(res => {
         expect(res.headers['x-auth']).toBeFalsy()
       })

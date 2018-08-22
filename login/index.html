@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LazyTourist API</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    @import url('https://rsms.me/inter/inter-ui.css');
+    body { 
+      font-family: 'Inter UI', sans-serif; 
+      background: linear-gradient(180deg, #944AFC 0%, #151F8C 100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="container mx-auto w-screen h-screen flex flex-col justify-center items-center">
+    <h1 class="mb-6 text-blue-lightest">LazyTourist API</h1>
+    <div class="bg-white flex flex-col justify-center items-center shadow-lg rounded px-8 pt-6 pb-8 mb-4 max-w-xs" id="main-container">
+      <form name="login" id="login-form">
+        <div class="mb-4">
+          <label class="block text-blue-darker text-sm font-bold mb-2" for="username">
+            Username
+          </label>
+          <input class="shadow appearance-none border-2 rounded w-full py-2 px-3 text-blue-darker leading-tight outline-none focus:border-teal-darkest" id="username" type="text" placeholder="Input your email">
+        </div>
+        <div class="mb-4" id="password-container">
+          <label class="block text-blue-darker text-sm font-bold mb-2" for="password">
+            Password
+          </label>
+          <input class="shadow appearance-none border-2 rounded w-full py-2 px-3 text-blue-darker mb-3 leading-tight outline-none focus:border-teal-darkest" id="password" type="password" placeholder="Input your password">
+        </div>
+        <div class="flex items-center justify-end">
+          <button id="login-button" class="bg-indigo-dark hover:bg-indigo-darkest text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Sign In
+          </button>
+        </div>
+      </form>
+    </div>
+    <p class="text-center text-grey text-xs">
+      ©2018 frebliklo
+    </p>
+  </div>
+  <script src="functions.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>
