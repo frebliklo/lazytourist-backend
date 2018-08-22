@@ -76,7 +76,7 @@ The needed API keys are:
 - [CurrencyLayer](https://currencylayer.com/)
 - [Fixer.io](https://fixer.io/)
 
-The file should export a single object containing the same key value pairs as `keys/prod.js`
+The file should export a single object containing the same key value pairs as `keys/prod.js` in the config directory
 
 ```js
 module.exports = {

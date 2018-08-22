@@ -1,7 +1,7 @@
 const { ObjectID } = require('mongodb')
 const jwt = require('jsonwebtoken')
 
-const { JWT_SALT } = require('../../../keys')
+const { JWT_SALT } = require('../../config/keys')
 
 const { Currency } = require('../../models/currency')
 const { User } = require('../../models/user')
