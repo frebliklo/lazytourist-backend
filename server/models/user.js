@@ -4,7 +4,7 @@ const validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
-const { JWT_SALT } = require('../../keys')
+const { JWT_SALT } = require('../config/keys')
 
 const { Schema } = mongoose
 

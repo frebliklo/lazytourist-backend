@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { MONGO_USER, MONGO_PWD } = require('../../keys')
+const { MONGO_USER, MONGO_PWD } = require('../config/keys')
 
 const options = {
   auth: {
