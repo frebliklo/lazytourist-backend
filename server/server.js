@@ -3,6 +3,8 @@ require('./config')
 const _ = require('lodash')
 const express = require('express')
 const path = require('path')
+const graphqlHTTP = require('express-graphql')
+const { buildSchema } = require('graphql')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const nodeCron = require('node-cron')
@@ -15,12 +17,19 @@ const { authenticate } = require('./middleware/authenticate')
 const { fetchCurrencyLayer } = require('./utils/fetchCurrencyLayer')
 const { fetchFixer } = require('./utils/fetchFixer') 
 
+const { schema } = require('./schema')
+
 const app = express()
 
 app.use(cors())
 app.use(bodyParser.json())
 
 app.use('/login', express.static(path.join(__dirname, '..', 'login')))
+
+app.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true
+}))
 
 nodeCron.schedule('0 */12 * * *', () => {
   // Log to monitor job
