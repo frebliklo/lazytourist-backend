@@ -5,7 +5,7 @@ const { CURRENCY_LAYER_API_KEY } = require('../config/keys')
 const currencies = 'DKK,EUR,GBP'
 const url = `http://www.apilayer.net/api/live?access_key=${CURRENCY_LAYER_API_KEY}&currencies=${currencies}`
 
-const fetchCurrencyLayer = callback => {
+const fetchCurrencyLayer = new Promise((resolve,reject) => {
   axios.get(url)
     .then(res => {
       const { source, quotes } = res.data
@@ -45,11 +45,12 @@ const fetchCurrencyLayer = callback => {
         source,
         name: 'United States Dollar',
         rates: newRates,
+        updatedAt: Date.now()
       }
       
-      callback(undefined, data)
+      resolve(data)
     })
-    .catch(err => callback(err))
-}
+    .catch(err => reject(err))
+})
 
 module.exports = { fetchCurrencyLayer }

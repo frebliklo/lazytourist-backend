@@ -5,7 +5,7 @@ const { FIXER_API_KEY } = require('../config/keys')
 const currencies = 'GBP,USD,DKK'
 const url = `http://data.fixer.io/api/latest?access_key=${FIXER_API_KEY}&symbols=${currencies}`
 
-const fetchFixer = callback => {
+const fetchFixer = new Promise((resolve,reject) => {
   axios.get(url)
     .then(res => {
       const { base, rates } = res.data
@@ -44,12 +44,13 @@ const fetchFixer = callback => {
       const data = {
         source: base,
         name: 'Euro',
-        rates: newRates
+        rates: newRates,
+        updatedAt: Date.now()
       }
 
-      callback(undefined, data)
+      resolve(data)
     })
-    .catch(err => callback(err))
-}
+    .catch(err => reject(err))
+})
 
 module.exports = { fetchFixer }

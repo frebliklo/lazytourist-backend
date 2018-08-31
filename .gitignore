@@ -1,4 +1,5 @@
 node_modules
 playground
 keys/dev.js
+server/config/keys/dev.js
 .vscode
