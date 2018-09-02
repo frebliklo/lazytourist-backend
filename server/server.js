@@ -12,6 +12,7 @@ const { mongoose } = require('./db/mongoose')
 const { Currency } = require('./models/currency')
 const { User } = require('./models/user')
 const { authenticate } = require('./middleware/authenticate')
+const { reverseGeocode } = require('./utils')
 
 const { schema } = require('./schema')
 
@@ -26,6 +27,15 @@ app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true
 }))
+
+app.post('/location', (req,res) => {
+  console.log(req.body)
+  const { lat, lng } = req.body
+
+  reverseGeocode(lat,lng).then(location => {
+    res.send(location)
+  }).catch(err => console.log(err))
+})
 
 app.get('/currencies', (req, res) => {
   Currency.find().then(currencies => {
