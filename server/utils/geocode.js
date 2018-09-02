@@ -10,20 +10,26 @@ const geocode = (address) => {
       .then(res => {
         const { address_components, formatted_address } = res.data.results[0]
 
-        const country = address_components.find(element => element.types[0] === 'country') 
-        const state = address_components.find(element => element.types[0] === 'administrative_area_level_1')
-        
-        
+        const countryComponents = address_components.find(element => element.types[0] === 'country') 
+        const stateComponents = address_components.find(element => element.types[0] === 'administrative_area_level_1')
+
+        const country = {
+          shortName: countryComponents.short_name,
+          longName: countryComponents.long_name
+        }
+
+        let state = {}
+
+        if(stateComponents) {
+          state = { shortName: stateComponents.short_name, longName: stateComponents.long_name }
+        } else {
+          state = { shortName: 'Couldn\'t find state', longName: 'Couldn\t find state' }
+        }
+
         const data = {
-          country: {
-            shortName: country.short_name,
-            longName: state.long_name
-          },
-          state: {
-            shortName: state.short_name,
-            longName: state.long_name
-          },
-          address: formatted_address
+          country,
+          state,
+          formattedAddress: formatted_address
         }
 
         resolve(data)
