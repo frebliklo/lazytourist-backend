@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const { mongoose } = require('./db/mongoose')
-const { Currency } = require('./models/currency')
+const { Currency, State } = require('./models')
 const { User } = require('./models/user')
 const { authenticate } = require('./middleware/authenticate')
 const { geocode, reverseGeocode } = require('./utils')
@@ -30,23 +30,44 @@ app.use('/graphql', graphqlHTTP({
 
 app.post('/location/coordinates', (req,res) => {
   const { lat, lng } = req.body
+  let data = {}
 
-  reverseGeocode(lat,lng).then(location => {
-    res.send(location)
-  }).catch(err => {
-    res.status(400).send(`Couldn't resolve the request\n${err}`)
-  })
+  reverseGeocode(lat,lng)
+    .then(location => {
+      data = location
+
+      State.findOne({ shortName: location.state.shortName })
+        .then(response => {
+          data.salesTax = response.salesTax.average
+          
+          res.send(data)
+        })
+        .catch(err => res.status(400).send(`Couldn't resolve the request\n${err}`))
+    })
+    .catch(err => {
+      res.status(400).send(`Couldn't resolve the request\n${err}`)
+    })
 })
 
 app.post('/location/address', (req,res) => {
   const { address } = req.body
-  console.log(req.body)
-  
-  geocode(address).then(location => {
-    res.send(location)
-  }).catch(err => {
-    res.status(400).send(`Couldn't resolve the request\n${err}`)
-  })
+  let data = {}
+
+  geocode(address)
+    .then(location => {
+      data = location
+
+      State.findOne({ shortName: location.state.shortName })
+        .then(response => {
+          data.salesTax = response.salesTax.average
+
+          res.send(data)
+        })
+        .catch(err => res.status(400).send(`Couldn't resolve the request\n${err}`))
+    })
+    .catch(err => {
+      res.status(400).send(`Couldn't resolve the request\n${err}`)
+    })
 })
 
 app.get('/currencies', (req, res) => {
