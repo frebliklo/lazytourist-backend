@@ -19,17 +19,16 @@ const query = new GraphQLObjectType({
       args: {
         source: { type: GraphQLString, defaultValue: "USD" }
       },
-      resolve: (parentValue, args) => {
+      resolve: async (parentValue, args) => {
         const source = args.source.toUpperCase()
-        return Currency.findOne({ source })
-          .then(currency => currency)
+        return await Currency.findOne({ source })
       }
     },
     currencies: {
       description: 'Find all currencies available',
       type: new GraphQLList(CurrencyType),
-      resolve: (parentValue, args) => {
-        return Currency.find().then(currencies => currencies)
+      resolve: async (parentValue, args) => {
+        return await Currency.find()
       }
     },
     address: {
