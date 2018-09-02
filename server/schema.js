@@ -5,9 +5,10 @@ const {
   GraphQLString,
 } = require('graphql')
 
-const { Currency } = require('./models/currency')
+const { Currency, State } = require('./models')
+const { geocode, reverseGeocode } = require('./utils')
 
-const { CurrencyType } = require('./types')
+const { AddressType, CurrencyType, StateType } = require('./types')
 
 const query = new GraphQLObjectType({
   name: 'Query',
@@ -29,6 +30,45 @@ const query = new GraphQLObjectType({
       type: new GraphQLList(CurrencyType),
       resolve: (parentValue, args) => {
         return Currency.find().then(currencies => currencies)
+      }
+    },
+    address: {
+      description: 'Find an address by latitude and longitude or address as string. If coordinates are input the string address will be ignored',
+      type: AddressType,
+      args: {
+        lat: { type: GraphQLString },
+        lng: { type: GraphQLString },
+        address: { type: GraphQLString }
+      },
+      resolve: async (parentValue, args) => {
+        const { lat, lng, address } = args
+        
+        if(lat && lng) {
+          return await reverseGeocode(lat,lng)
+        }
+
+        return await geocode(address)
+      }
+    },
+    state: {
+      description: 'Find a US state by state code or full name',
+      type: StateType,
+      args: {
+        code: { type: GraphQLString },
+        name: { type: GraphQLString }
+      },
+      resolve: async (parentValue, args) => {
+        if(args.code) {
+          return await State.findOne({ shortName: args.code })
+        }
+        return await State.findOne({ longName: args.name })
+      }
+    },
+    states: {
+      description: 'Get list of all states',
+      type: new GraphQLList(StateType),
+      resolve: async (parentValue, args) => {
+        return await State.find()
       }
     }
   })
