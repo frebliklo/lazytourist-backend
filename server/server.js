@@ -12,7 +12,7 @@ const { mongoose } = require('./db/mongoose')
 const { Currency } = require('./models/currency')
 const { User } = require('./models/user')
 const { authenticate } = require('./middleware/authenticate')
-const { reverseGeocode } = require('./utils')
+const { geocode, reverseGeocode } = require('./utils')
 
 const { schema } = require('./schema')
 
@@ -28,13 +28,25 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true
 }))
 
-app.post('/location', (req,res) => {
-  console.log(req.body)
+app.post('/location/coordinates', (req,res) => {
   const { lat, lng } = req.body
 
   reverseGeocode(lat,lng).then(location => {
     res.send(location)
-  }).catch(err => console.log(err))
+  }).catch(err => {
+    res.status(400).send(`Couldn't resolve the request\n${err}`)
+  })
+})
+
+app.post('/location/address', (req,res) => {
+  const { address } = req.body
+  console.log(req.body)
+  
+  geocode(address).then(location => {
+    res.send(location)
+  }).catch(err => {
+    res.status(400).send(`Couldn't resolve the request\n${err}`)
+  })
 })
 
 app.get('/currencies', (req, res) => {
