@@ -13,8 +13,8 @@ module.exports = new GraphQLObjectType({
     source: { type: GraphQLString },
     name: { type: GraphQLString },
     updatedAt: { type: GraphQLString },
-    rates: { type: new GraphQLList(ExchangeRateType) },
-    rate: {
+    exchangeRates: { type: new GraphQLList(ExchangeRateType) },
+    exchangeRate: {
       description: 'Find a single exchange rate for the source currency',
       type: ExchangeRateType,
       args: {
