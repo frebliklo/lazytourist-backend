@@ -2,7 +2,7 @@
   "name": "tourist-backend",
   "version": "1.0.0",
   "description": "Backend for tourist apps",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
     "dev": "nodemon server/server.js",
