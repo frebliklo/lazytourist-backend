@@ -25,6 +25,15 @@ module.exports = new GraphQLObjectType({
       type: SalesTaxType,
       resolve: async (parentValue, args) => {
         const data = await State.findOne({ shortName: parentValue.state.shortName })
+        
+        if(data === null) {
+          const response = {
+            average: 0,
+            base: 0
+          }
+          return response
+        }
+        
         const response = {
           average: data.salesTax.average,
           base: data.salesTax.base
