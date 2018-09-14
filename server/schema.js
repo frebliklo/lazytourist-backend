@@ -44,7 +44,7 @@ const query = new GraphQLObjectType({
         
         if(lat && lng) {
           return reverseGeocode(lat,lng)
-        } else if(!lat && !lng && address) {
+        } else if(address) {
           return geocode(address)
         } else {
           throw new Error('Unable to find location')
