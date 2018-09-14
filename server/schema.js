@@ -42,11 +42,14 @@ const query = new GraphQLObjectType({
       resolve: async (parentValue, args) => {
         const { lat, lng, address } = args
         
-        if(lat && lng) {
+        if(lat && lng && lat !== undefined && lng !== undefined) {
           return await reverseGeocode(lat,lng)
+        } if(address) {
+          return await geocode(address)
+        } else {
+          throw new Error('Unable to find location')
         }
 
-        return await geocode(address)
       }
     },
     state: {
